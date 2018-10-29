@@ -2,10 +2,10 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ template "syncthing-relay.fullname" . }}
+  name: {{ template "strelaysrv.fullname" . }}
   labels:
-    app: {{ template "syncthing-relay.name" . }}
-    chart: {{ template "syncthing-relay.chart" . }}
+    app: {{ template "strelaysrv.name" . }}
+    chart: {{ template "strelaysrv.chart" . }}
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:

@@ -1,22 +1,22 @@
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
-  name: {{ template "syncthing-relay.fullname" . }}
+  name: {{ template "strelaysrv.fullname" . }}
   labels:
-    app: {{ template "syncthing-relay.name" . }}
-    chart: {{ template "syncthing-relay.chart" . }}
+    app: {{ template "strelaysrv.name" . }}
+    chart: {{ template "strelaysrv.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ template "syncthing-relay.name" . }}
+      app: {{ template "strelaysrv.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ template "syncthing-relay.name" . }}
+        app: {{ template "strelaysrv.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
@@ -25,8 +25,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
 {{ toYaml .Values.args | indent 12 }}
+{{ toYaml .Values.extraArgs | indent 12 }}
           env:
 {{ toYaml .Values.env | indent 12 }}
+{{ toYaml .Values.extraEnv | indent 12 }}
           ports:
             - name: relay
               containerPort: 22067
@@ -47,12 +49,12 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
           - name: data
-            mountPath: /relaysrv
+            mountPath: /strelaysrv
       volumes:
       - name: data
       {{- if .Values.persistence.enabled }}
         persistentVolumeClaim:
-          claimName: {{ .Values.persistence.existingClaim | default (include "syncthing-relay.fullname" .) }}
+          claimName: {{ .Values.persistence.existingClaim | default (include "strelaysrv.fullname" .) }}
       {{- else }}
         emptyDir: {}
       {{- end }}
@@ -67,4 +69,7 @@ spec:
     {{- with .Values.tolerations }}
       tolerations:
 {{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
     {{- end }}

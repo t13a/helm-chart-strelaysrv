@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "syncthing-relay.fullname" . }}
+  name: {{ template "strelaysrv.fullname" . }}
   labels:
-    app: {{ template "syncthing-relay.name" . }}
-    chart: {{ template "syncthing-relay.chart" . }}
+    app: {{ template "strelaysrv.name" . }}
+    chart: {{ template "strelaysrv.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -19,5 +19,5 @@ spec:
       protocol: TCP
       name: status
   selector:
-    app: {{ template "syncthing-relay.name" . }}
+    app: {{ template "strelaysrv.name" . }}
     release: {{ .Release.Name }}

@@ -1,14 +1,14 @@
 replicaCount: 1
 
 image:
-  repository: kylemanna/syncthing-relay
-  tag: latest
+  repository: t13a/strelaysrv
+  tag: v0.14.51
   pullPolicy: IfNotPresent
 
-args: []
+extraArgs: []
 # - '-pools=""'
 
-env: []
+extraEnv: []
 
 service:
   type: ClusterIP
@@ -56,3 +56,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# priorityClassName:
