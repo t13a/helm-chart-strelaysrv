@@ -5,10 +5,12 @@ image:
   tag: v0.14.51
   pullPolicy: IfNotPresent
 
-extraArgs: []
+# extraArgs:
 # - '-pools=""'
 
-extraEnv: []
+# extraEnv:
+# - name:
+#   value:
 
 service:
   type: ClusterIP
