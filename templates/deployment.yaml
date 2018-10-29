@@ -52,6 +52,9 @@ spec:
           volumeMounts:
           - name: data
             mountPath: /strelaysrv
+          {{- if .Values.extraVolumeMounts }}
+{{ toYaml .Values.extraVolumeMounts | indent 10 }}
+          {{- end }}
       volumes:
       - name: data
       {{- if .Values.persistence.enabled }}
@@ -59,6 +62,9 @@ spec:
           claimName: {{ .Values.persistence.existingClaim | default (include "strelaysrv.fullname" .) }}
       {{- else }}
         emptyDir: {}
+      {{- end }}
+      {{- if .Values.extraVolumes }}
+{{ toYaml .Values.extraVolumes | indent 6 }}
       {{- end }}
     {{- with .Values.nodeSelector }}
       nodeSelector:
